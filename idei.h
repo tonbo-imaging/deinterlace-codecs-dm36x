@@ -4,7 +4,7 @@
 //    ALGORITHM : De-Interlacer
 //    VENDOR    : TI
 //    TARGET    : DM365
-//    VERSION   : 1.9
+//    VERSION   : 2.0
 //    PURPOSE   : This is the top level driver file that exercises the DEI code
 //============================================================================
 */
@@ -62,14 +62,20 @@ typedef struct IDEI_Params {
 
     // CreateParams specific to DEI Encoder
 
-    XDAS_Int32 subWindowHeight;  /* Height of the Subwindow */
-    XDAS_Int32 subWindowWidth;   /* Width of the Subwindow */
+    XDAS_Int32 frameHeight;     /* Height of the Frame */
+    XDAS_Int32 frameWidth;      /* Width of the Frame */
 
-    XDAS_Int32 threshold;        /* De-Interlacer Threshold */
+    XDAS_Int32 inLineOffset;    /* Input Line Offset */
+    XDAS_Int32 outLineOffset;   /* Output Line Offset */
 
-    XDAS_Int32 outputFormat;     /* De-Interlacer Output Format */
-    XDAS_Int32 q_num;            /* EDMA Queue Number */
-    XDAS_Int32 askIMCOPRes;      /* Explicitly ask for IMCOP Resource */
+    XDAS_Int32 threshold_low;   /* De-Interlacer Low Threshold */
+    XDAS_Int32 threshold_high;  /* De-Interlacer High Threshold */
+
+    XDAS_Int32 inputFormat;     /* De-Interlacer Input Format */
+
+    XDAS_Int32 outputFormat;    /* De-Interlacer Output Format */
+    XDAS_Int32 q_num;           /* EDMA Queue Number */
+    XDAS_Int32 askIMCOPRes;     /* Explicitly ask for IMCOP Resource */
     XDAS_Int32 sysBaseAddr;
 
 } IDEI_Params;
@@ -83,6 +89,15 @@ typedef struct IDEI_Params {
 typedef struct IDEI_DynamicParams
 {
     IVIDENC1_DynamicParams videncDynamicParams;
+
+    XDAS_Int32 frameHeight;     /* Height of the frame */
+    XDAS_Int32 frameWidth;      /* Width of the frame */
+    XDAS_Int32 inLineOffset;    /* Input Line Offset */
+    XDAS_Int32 outLineOffset;   /* Output Line Offset */
+    XDAS_Int32 threshold_low;   /* DE-Interlacer Low Threshold */
+    XDAS_Int32 threshold_high;  /* DE-Interlacer High Threshold */
+    XDAS_Int32 inputFormat;     /* DE-Interlacer Input Format */
+    XDAS_Int32 outputFormat;    /* DE-Interlacer Output Format */
 
 } IDEI_DynamicParams;
 /*
@@ -133,6 +148,8 @@ typedef struct IDEI_OutArgs
 
     XDAS_Int32 outWidth;
     XDAS_Int32 outHeight;
+    XDAS_Int32 appliedTh_h;
+    XDAS_Int32 appliedTh_l;
 
 } IDEI_OutArgs;
 
